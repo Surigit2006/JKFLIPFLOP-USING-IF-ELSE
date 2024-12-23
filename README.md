@@ -59,31 +59,53 @@ RegisterNumber:24901016
 */
 ```
 
-module jkff(j,k,clk,q,qbar);
-input j,k,clk;
-output reg q,qbar;
-initial 
-begin
-q=1'b0;
-q=1'b1;
-end 
+module ss(q, qb,j,k,clock,reset);
+    input j,k,clock,reset;
+    output reg q, qb;
+	 
+always @ (posedge (clock))
 
-always @(posedge clk)
-begin 
-q<=(j&~q)|(~k&q);
-qbar<=~q;
-end
+    begin 
+        if (!reset)
+            begin
+               q <= q;
+               qb <=qb;
+            end
+else 
+      begin
+        if (j==0 && k==0)
+		       begin
+			    q <= q;
+			    q <= qb;
+			    end	 
+        
+        else if (j!=k)
+             begin
+	          q <= j;
+	          qb <= k;
+	          end
+        else if (j==1 && k==1)
+             begin
+	          q <= ~q;
+	          qb <= ~qb;
+	          end
+	  
+      end
+ 
+end           
 endmodule
 ```
 
 **RTL LOGIC FOR FLIPFLOPS**
 
-![image](https://github.com/user-attachments/assets/47d529da-7def-4c3c-95aa-3fc7e3fe2cd5)
+![image](https://github.com/user-attachments/assets/93661c20-baa5-4c34-a155-8fe8b3568708)
+
 
 
 **TIMING DIGRAMS FOR FLIP FLOPS**
 
-![image](https://github.com/user-attachments/assets/b04b36e2-96f0-41db-8666-3fb04c312b61)
+![image](https://github.com/user-attachments/assets/3dc6a605-6074-4ca4-af73-08873c27f914)
+
 
 
 **RESULTS**
